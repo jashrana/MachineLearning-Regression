@@ -1,2 +1,30 @@
-# Regression on real-time dataset using Polynomial Regression & K-Nearest Neighbours
+# Regression - Polynomial Regression & K-Nearest Neighbours
+Regression solution to a time series dataset using Polynomial Regression and K-Nearest Neighbours using Scikit Learn.<br><br>
+Code Files:
+1. K Nearest Neighbors.ipynb
+2. Polynomial Regression.ipynb
 
+## Aim
+The goal of this assignment is to gain practical experience in performing regression on a real-world dataset, using two machine learning packages of our choice.
+
+## Theory/Working
+The data is an important part of this assignment, and it represents 7 independent variables (features) and 1 dependent variable (`electricity_consumption`). The `electricity_consumption` is a dependent variable that contains continuous values between 174 and 1386, which shows the number of unit of electricity consumed per hour of the day. In the future, if we collect random data for the features and we want to know the consumption, the machine should give us the ‘numerical value’ of the dependent variable i.e., a value which is assumed to be the electricity consumed that day for that hour. For this, we will use Regression Algorithms from Supervised Learning to find the continuous values of the items. Regression models can show whether changes observed in the dependent variable are associated with the changes in one or more independent variables, provided that the dependent variables are continuous values. The features for this are `ID`, `datetime`, `temperature`, `var1`, `pressure`, `windspeed`, & `var2`. ID is not important, so we remove that, and we use `datetime` column as an index for the pandas data frame, as we need to verify the data as a Time Series model to train the model.
+
+There are 2 datasets, train.csv (which contains 211,976 rows of data) and test.csv (which contains 59,983 rows of data). Both the data is time-based i.e., the data contains the year, month, day, hour, minute, and seconds, in which hourly consumption is displayed as a row. The train data contains data from 2013 to 2017, from day 1 to 23 for each month in each year, for 24 hours. The test data set contains the same years but from day 24 to 30 or 31 for each month in each year, for 24 hours. We must create a model which can predict the values for each test case for the given datetime stamp. There is also a feature called var2 which is categorical data (A, B, C), which was converted to 0, 1, and 2 respectively using a dictionary. As you'll see, there is no balance in the dataset and so we don’t expect values to be predicted with the best accuracy.
+
+
+1. Polynomial Regression: Polynomial Regression is an advanced type of Linear Regression training algorithm that is a good function to perform regression algorithm on the Linear model but with a difference. Linear Regression is a simple yet powerful algorithm capable of creating a model predicting a continuous value using one or more features. It creates a model which is basically a ‘line’ on a graph that best fits the data. It takes the continuous values and forms a line that gives the minimum values for all the data points and then creates a mean value of those values for each point of data. :
+$$y=\beta0 + \beta_1x1 +….+\beta_ix_i$$
+where:
+      - $y$: the dependent variable; the thing we are trying to predict.
+      - $x_i$: the independent variables: the features our model uses to model y.
+      - $\beta_i$: the coefficients (aka "weights") of our regression model.
+      - ϵϵ: the irreducible error in our model. A term that collects all the unmodeled parts of our data.<br><br>
+Polynomial Regression is better to use when you have non-linear data and so we add some polynomial terms to convert Linear Regression to Polynomial Regression. Suppose we have $X$ as independent data and $Y$ as dependent data. Before feeding data to a mode in the preprocessing stage we convert the input variables into polynomial terms using some degree. Consider an example my input value is 35 and the degree of a polynomial is 2 so I will find 35 power 0, 35 power 1, and 35 power 2 this helps to interpret the non-linear relationship in data. The equation of polynomial is:
+$$y= \beta_0+\beta_1x_1 + \beta_2x_2+ \beta_3x_3+....+ \beta_nx_n$$
+We first take the data and convert the data into polynomial features with keeping degree = 2 as we have a lot of features. Then we split the training data into training data and testing data using TimeSeriesSplit class, keeping n_splits = 100. Then we train the data for 100 splits and then check the coefficients of the model. There will be more than the given feature inputs as we have modified them into a polynomial fit.
+
+2. K Nearest Neighbors: The K-Nearest Neighbors is a Supervised Learning technique capable of performing both classification and regression algorithms with its simplicity. The idea behind this is that it uses ‘feature similarity’ to predict the values of any new data points. This means that the new data point will be calculated according to how near it is to the trained features. This is a unique feature due to which it can be used for both regression and classification. We can use KNearestRegressor() class from the sklearn.neighbors’ package.<br><br>
+There are many ways we can use to calculate the distance between new and training points i.e., Euclidian, Manhattan & Hemming distance. After that, we can choose our k value which basically determines the number of neighbors when we assign a value to any new observation. All this is done by the algorithm, and the default value for k is 3. It is a lazy algorithm which means it has no or extremely short training phase. After determining the place of each data point, it calculates the data point for each prediction which basically takes the shortest distance from the nearest points and determines their value.
+The three ways we can find the distance in KNN are:
+      - Euclidean distance: the square root of the sum of differences between the components of x and y: ![alt text](https://github.com/jashrana/MachineLearning-Regression/blob/Submission/ed.png?raw=true)
